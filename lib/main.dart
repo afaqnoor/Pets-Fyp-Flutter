@@ -1,6 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
-import 'package:intoduction_screens/Splash/splashscreen.dart';
+import 'package:intoduction_screens/pages/Splash/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {

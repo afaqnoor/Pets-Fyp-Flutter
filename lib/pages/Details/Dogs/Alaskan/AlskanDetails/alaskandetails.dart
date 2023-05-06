@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/daycare.dart';
 import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/healtcare.dart';
@@ -5,7 +7,10 @@ import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/hyginic.dart';
 import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/training.dart';
 
 class AlaskanDetails extends StatefulWidget {
-  const AlaskanDetails({super.key});
+  const AlaskanDetails({super.key, required this.name, required this.image});
+
+  final name;
+  final image;
 
   @override
   State<AlaskanDetails> createState() => _AlaskanDetailsState();

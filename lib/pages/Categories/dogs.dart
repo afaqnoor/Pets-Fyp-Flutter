@@ -27,7 +27,9 @@ class _DogsDetailsState extends State<DogsDetails> {
               return const Center(child: CircularProgressIndicator());
             } else {
               print(snapshot.data!.docs.length);
-              return ListView.builder(
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   return InkWell(
@@ -35,432 +37,59 @@ class _DogsDetailsState extends State<DogsDetails> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (ctx) => const AlaskanDetails()));
+                              builder: (ctx) => AlaskanDetails(
+                                    image: CachedNetworkImage(
+                                        imageUrl: snapshot.data!.docs[index]
+                                            ['image_url']),
+                                    name: snapshot.data!.docs[index]['name'],
+                                  )));
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height / 3.8,
-                            width: MediaQuery.of(context).size.width / 2.2,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 190, 190, 188),
-                              borderRadius: BorderRadius.circular(15),
+                      padding: const EdgeInsets.only(right: 10, bottom: 10),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 4.5,
+                        width: MediaQuery.of(context).size.width / 5,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 190, 190, 188),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(15)),
+                              child: CachedNetworkImage(
+                                imageUrl: snapshot
+                                    .data!.docs[index]['image_url']
+                                    .toString(),
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 120,
+                                memCacheHeight: 100,
+                                memCacheWidth: 100,
+                                errorWidget: (context, _, c) =>
+                                    const Icon(Icons.error),
+                              ),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      topRight: Radius.circular(15)),
-                                  child: CachedNetworkImage(
-                                    imageUrl: snapshot
-                                        .data!.docs[index]['image_url']
-                                        .toString(),
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    memCacheHeight: 150,
-                                    memCacheWidth: 150,
-                                    errorWidget: (context, _, c) =>
-                                        const Icon(Icons.error),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  snapshot.data!.docs[index]['name'].toString(),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                            const SizedBox(
+                              height: 5,
                             ),
-                          ),
-                          // Container(
-                          //   height: MediaQuery.of(context).size.height / 4,
-                          //   width: MediaQuery.of(context).size.width / 2.26,
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.amber,
-                          //     borderRadius: BorderRadius.circular(15),
-                          //   ),
-                          // ),
-                        ],
+                            Text(
+                              snapshot.data!.docs[index]['name'].toString(),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    // child: Container(
-                    //   margin: const EdgeInsets.symmetric(vertical: 10),
-                    //   height: 370,
-                    //   width: double.infinity,
-                    //   decoration: BoxDecoration(
-                    //     color: const Color.fromARGB(255, 227, 225, 225),
-                    //     // border:
-                    //     //     Border.all(color: Colors.black, width: 2),
-                    //     borderRadius: BorderRadius.circular(5),
-                    //   ),
-                    //   child: Column(
-                    //     children: [
-                    //       ListTile(
-                    //         title: Padding(
-                    //           padding: const EdgeInsets.only(bottom: 15.0),
-                    //           child: CachedNetworkImage(
-                    //             imageUrl: snapshot
-                    //                 .data!.docs[index]['image_url']
-                    //                 .toString(),
-                    //             fit: BoxFit.cover,
-                    //             width: double.infinity,
-                    //             memCacheHeight: 150,
-                    //             memCacheWidth: 150,
-                    //             errorWidget: (context, _, c) =>
-                    //                 const Icon(Icons.error),
-                    //           ),
-                    //         ),
-                    //         //visualDensity: VisualDensity(horizontal: -10),
-                    //         subtitle: Text(
-                    //           snapshot.data!.docs[index]['name'].toString(),
-                    //           style:
-                    //               const TextStyle(fontWeight: FontWeight.bold),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   );
                 },
               );
-              // return Padding(
-              //     padding: const EdgeInsets.symmetric(vertical: 10),
-              //     child: ListView.builder(
-              //       itemCount: snapshot.data!.docs.length,
-              //       itemBuilder: (context, index) {
-              //         return GridView.count(
-              //           crossAxisCount: 2,
-              //           mainAxisSpacing: 10,
-              //           crossAxisSpacing: 10,
-              //           children: [
-              //             Container(
-              //               height: 100,
-              //               width: 100,
-              //               decoration: BoxDecoration(
-              //                   color: const Color.fromARGB(255, 222, 220, 220),
-              //                   borderRadius: BorderRadius.circular(20)),
-              //               child: Column(
-              //                 children: [
-              //                   SizedBox(
-              //                     height: 130,
-              //                     width: double.infinity,
-              //                     child: Padding(
-              //                       padding: const EdgeInsets.only(top: 8.0),
-              //                       child: CachedNetworkImage(
-              //                         imageUrl: snapshot
-              //                             .data!.docs[index]['image_url']
-              //                             .toString(),
-              //                         fit: BoxFit.cover,
-              //                         width: double.infinity,
-              //                         memCacheHeight: 250,
-              //                         memCacheWidth: 250,
-              //                         errorWidget: (context, _, c) =>
-              //                             const Icon(Icons.error),
-              //                       ),
-              //                     ),
-              //                   ),
-              //                   Text(
-              //                     snapshot.data!.docs[index]['name'].toString(),
-              //                     style: const TextStyle(
-              //                         fontWeight: FontWeight.bold),
-              //                   ),
-              //                 ],
-              //               ),
-              //             )
-              //           ],
-              //         );
-              //       },
-              //     ));
             }
           }),
     ));
   }
 }
-
-
-// GridView.count(
-//         crossAxisCount: 2,
-//         mainAxisSpacing: 10,
-//         crossAxisSpacing: 10,
-//         children: [
-//           InkWell(
-//             onTap: () {
-//               Navigator.push(context,
-//                   MaterialPageRoute(builder: (ctx) => const GermanDetails()));
-//             },
-//             child: Container(
-//               height: 100,
-//               width: 100,
-//               decoration: BoxDecoration(
-//                   color: const Color.fromARGB(255, 222, 220, 220),
-//                   borderRadius: BorderRadius.circular(20)),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   SizedBox(
-//                     height: 130,
-//                     child: ClipRRect(
-//                         borderRadius: const BorderRadius.only(
-//                             topRight: Radius.circular(20),
-//                             topLeft: Radius.circular(20)),
-//                         child: Image.asset(
-//                           'images/dogs/GermanShepherd.jpg',
-//                           fit: BoxFit.cover,
-//                           width: double.infinity,
-//                         )),
-//                   ),
-//                   const Padding(
-//                     padding: EdgeInsets.only(left: 6.0, top: 8),
-//                     child: Text(
-//                       'German Shepherd',
-//                       style: TextStyle(fontWeight: FontWeight.bold),
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-//           ),
-//           InkWell(
-//             onTap: () {
-//               Navigator.push(context,
-//                   MaterialPageRoute(builder: (ctx) => const HoundDetials()));
-//             },
-//             child: Container(
-//               height: 100,
-//               width: 100,
-//               decoration: BoxDecoration(
-//                   color: const Color.fromARGB(255, 222, 220, 220),
-//                   borderRadius: BorderRadius.circular(20)),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   SizedBox(
-//                     height: 130,
-//                     child: ClipRRect(
-//                         borderRadius: const BorderRadius.only(
-//                             topRight: Radius.circular(20),
-//                             topLeft: Radius.circular(20)),
-//                         child: Image.asset(
-//                           'images/dogs/Hound.jpg',
-//                           fit: BoxFit.cover,
-//                           width: double.infinity,
-//                         )),
-//                   ),
-//                   const Padding(
-//                     padding: EdgeInsets.only(left: 6.0, top: 8),
-//                     child: Text(
-//                       'Hound',
-//                       style: TextStyle(fontWeight: FontWeight.bold),
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-//           ),
-//           Container(
-//             height: 100,
-//             width: 100,
-//             decoration: BoxDecoration(
-//                 color: const Color.fromARGB(255, 222, 220, 220),
-//                 borderRadius: BorderRadius.circular(20)),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 SizedBox(
-//                   height: 130,
-//                   child: ClipRRect(
-//                       borderRadius: const BorderRadius.only(
-//                           topRight: Radius.circular(20),
-//                           topLeft: Radius.circular(20)),
-//                       child: Image.asset(
-//                         'images/dogs/Sporting.jpg',
-//                         fit: BoxFit.cover,
-//                         width: double.infinity,
-//                       )),
-//                 ),
-//                 const Padding(
-//                   padding: EdgeInsets.only(left: 6.0, top: 8),
-//                   child: Text(
-//                     'Sporting',
-//                     style: TextStyle(fontWeight: FontWeight.bold),
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//           Container(
-//             height: 100,
-//             width: 100,
-//             decoration: BoxDecoration(
-//                 color: const Color.fromARGB(255, 222, 220, 220),
-//                 borderRadius: BorderRadius.circular(20)),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 SizedBox(
-//                   height: 130,
-//                   child: ClipRRect(
-//                       borderRadius: const BorderRadius.only(
-//                           topRight: Radius.circular(20),
-//                           topLeft: Radius.circular(20)),
-//                       child: Image.asset(
-//                         'images/dogs/Terrier.jpg',
-//                         fit: BoxFit.cover,
-//                         width: double.infinity,
-//                       )),
-//                 ),
-//                 const Padding(
-//                   padding: EdgeInsets.only(left: 6.0, top: 8),
-//                   child: Text(
-//                     'Terrier',
-//                     style: TextStyle(fontWeight: FontWeight.bold),
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//           InkWell(
-//             onTap: () {
-//               Navigator.push(context,
-//                   MaterialPageRoute(builder: (ctx) => const AlaskanDetails()));
-//             },
-//             child: Container(
-//               height: 100,
-//               width: 100,
-//               decoration: BoxDecoration(
-//                   color: const Color.fromARGB(255, 222, 220, 220),
-//                   borderRadius: BorderRadius.circular(20)),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   SizedBox(
-//                     height: 130,
-//                     child: ClipRRect(
-//                         borderRadius: const BorderRadius.only(
-//                             topRight: Radius.circular(20),
-//                             topLeft: Radius.circular(20)),
-//                         child: Image.asset(
-//                           'images/dogs/Alaskan Malamute.jpeg',
-//                           fit: BoxFit.cover,
-//                           width: double.infinity,
-//                         )),
-//                   ),
-//                   const Padding(
-//                     padding: EdgeInsets.only(left: 6.0, top: 8),
-//                     child: Text(
-//                       'Alaskan Malamute',
-//                       style: TextStyle(fontWeight: FontWeight.bold),
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-//           ),
-//           InkWell(
-//             onTap: () {
-//               Navigator.push(context,
-//                   MaterialPageRoute(builder: (ctx) => const BuldogDetails()));
-//             },
-//             child: Container(
-//               height: 100,
-//               width: 100,
-//               decoration: BoxDecoration(
-//                   color: const Color.fromARGB(255, 222, 220, 220),
-//                   borderRadius: BorderRadius.circular(20)),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   SizedBox(
-//                     height: 130,
-//                     child: ClipRRect(
-//                         borderRadius: const BorderRadius.only(
-//                             topRight: Radius.circular(20),
-//                             topLeft: Radius.circular(20)),
-//                         child: Image.asset(
-//                           'images/dogs/bulldog.jpg',
-//                           fit: BoxFit.cover,
-//                           width: double.infinity,
-//                         )),
-//                   ),
-//                   const Padding(
-//                     padding: EdgeInsets.only(left: 6.0, top: 8),
-//                     child: Text(
-//                       'bulldog',
-//                       style: TextStyle(fontWeight: FontWeight.bold),
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-//           ),
-//           Container(
-//             height: 100,
-//             width: 100,
-//             decoration: BoxDecoration(
-//                 color: const Color.fromARGB(255, 222, 220, 220),
-//                 borderRadius: BorderRadius.circular(20)),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 SizedBox(
-//                   height: 130,
-//                   child: ClipRRect(
-//                       borderRadius: const BorderRadius.only(
-//                           topRight: Radius.circular(20),
-//                           topLeft: Radius.circular(20)),
-//                       child: Image.asset(
-//                         'images/dogs/Retriver.jpg',
-//                         fit: BoxFit.cover,
-//                         width: double.infinity,
-//                       )),
-//                 ),
-//                 const Padding(
-//                   padding: EdgeInsets.only(left: 6.0, top: 8),
-//                   child: Text(
-//                     'Retriver',
-//                     style: TextStyle(fontWeight: FontWeight.bold),
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//           Container(
-//             height: 100,
-//             width: 100,
-//             decoration: BoxDecoration(
-//                 color: const Color.fromARGB(255, 222, 220, 220),
-//                 borderRadius: BorderRadius.circular(20)),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 SizedBox(
-//                   height: 130,
-//                   child: ClipRRect(
-//                       borderRadius: const BorderRadius.only(
-//                           topRight: Radius.circular(20),
-//                           topLeft: Radius.circular(20)),
-//                       child: Image.asset(
-//                         'images/dogs/Pomeranian.jpg',
-//                         fit: BoxFit.cover,
-//                         width: double.infinity,
-//                       )),
-//                 ),
-//                 const Padding(
-//                   padding: EdgeInsets.only(left: 6.0, top: 8),
-//                   child: Text(
-//                     'Pomeranian',
-//                     style: TextStyle(fontWeight: FontWeight.bold),
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),

@@ -1,9 +1,18 @@
+// ignore_for_file: unused_field, unused_local_variable, avoid_print
+
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intoduction_screens/pages/Auth_Page/sign_in.dart';
 import 'package:intoduction_screens/pages/Categories/cats.dart';
 import 'package:intoduction_screens/pages/Categories/dogs.dart';
 import 'package:intoduction_screens/pages/Categories/hamster.dart';
 import 'package:intoduction_screens/pages/Categories/parrots.dart';
-import 'package:intoduction_screens/pages/Drawer/drawerpage.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,104 +22,288 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  final _advancedDrawerController = AdvancedDrawerController();
+
+  File? _image;
+  final picker = ImagePicker();
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+  Future getPickedImage() async {
+    final pickedimage = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedimage != null) {
+        _image = File(pickedimage.path);
+      } else {
+        print('No Image Picked');
+      }
+    });
+  }
+
+  String? username;
+  _getDataFromDatabase() async {
+    await FirebaseFirestore.instance
+        .collection("UserAuthData")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get(const GetOptions(source: Source.cache))
+        .then((snapshot) async {
+      if (snapshot.exists && snapshot.get('username') != null) {
+        setState(() {
+          username = snapshot.data()!['username'];
+        });
+      } else {
+        setState(() {
+          username = snapshot.data()!['username'];
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    _getDataFromDatabase();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 4, vsync: this);
-    return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (ctx) => const DrawerPage()));
-            },
-            icon: const Icon(Icons.menu),
-          ),
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          title: const Center(
-              child: Padding(
-            padding: EdgeInsets.only(right: 70.0),
-            child: Text(
-              'Home Page',
-              style: TextStyle(color: Colors.black),
+    return SafeArea(
+      child: AdvancedDrawer(
+        backdrop: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.blueGrey, Colors.blueGrey.withOpacity(0.2)],
             ),
-          )),
+          ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(96, 107, 105, 105),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: TabBar(
-                    //indicatorSize: TabBarIndicatorSize.tab,
-                    indicator: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(25)),
-                    //indicatorSize: TabBarIndicatorSize.label,
-                    indicatorColor: Colors.black,
-                    indicatorWeight: 3,
-                    controller: tabController,
-                    tabs: const [
-                      Tab(
-                        child: Text(
-                          'Dogs',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 13),
-                        ),
+        controller: _advancedDrawerController,
+        animationCurve: Curves.easeInOut,
+        animationDuration: const Duration(milliseconds: 300),
+        animateChildDecoration: true,
+        rtlOpening: false,
+        disabledGestures: false,
+        childDecoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
+        drawer: SafeArea(
+          child: ListTileTheme(
+            textColor: Colors.white,
+            iconColor: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          getPickedImage();
+                          firebase_storage.Reference ref = firebase_storage
+                              .FirebaseStorage.instance
+                              .ref("Profile");
+                          firebase_storage.UploadTask uploadTask =
+                              ref.putFile(_image!.absolute);
+                          await Future.value(uploadTask);
+                        },
+                        child: Container(
+                            width: 70.0,
+                            height: 70.0,
+                            margin: const EdgeInsets.only(
+                              top: 24.0,
+                              bottom: 64.0,
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            decoration: const BoxDecoration(
+                              color: Colors.black26,
+                              shape: BoxShape.circle,
+                            ),
+                            child: _image != null
+                                ? ClipOval(
+                                    child: Image.file(
+                                      _image!,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : ClipOval(
+                                    child: Image.asset(
+                                      'images/empty.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )),
                       ),
-                      Tab(
-                        child: Text(
-                          'Cats',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 13),
-                        ),
+                      const SizedBox(
+                        width: 20,
                       ),
-                      Tab(
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 35.0),
                         child: Text(
-                          'Parrots',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 13),
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          'Hamster',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 13),
+                          username.toString(),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       )
-                    ]),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: TabBarView(
-                    physics: const BouncingScrollPhysics(),
-                    controller: tabController,
-                    children: const [
-                      DogsDetails(),
-                      CatDetails(),
-                      ParrotsDetails(),
-                      HamsterDetails(),
-                    ]),
-              ),
-            ],
+                    ],
+                  ),
+                ),
+                ListTile(
+                  onTap: () {},
+                  leading: const Icon(Icons.home),
+                  title: const Text('Home'),
+                ),
+                ListTile(
+                  onTap: () {},
+                  leading: const Icon(Icons.account_circle_rounded),
+                  title: const Text('Profile'),
+                ),
+                ListTile(
+                  onTap: () {},
+                  leading: const Icon(Icons.favorite),
+                  title: const Text('Favourites'),
+                ),
+                ListTile(
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (ctx) =>
+                                const SignIn(restorationId: 'main')),
+                        (route) => false);
+                  },
+                  leading: const Icon(Icons.logout_outlined),
+                  title: const Text('Sign Out'),
+                ),
+                const Spacer(),
+                DefaultTextStyle(
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.white54,
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 16.0,
+                    ),
+                    child: const Text('Terms of Service | Privacy Policy'),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ));
+        ),
+        child: SafeArea(
+          child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                elevation: 0,
+                title: const Padding(
+                  padding: EdgeInsets.only(left: 68.0),
+                  child: Text('Home Page'),
+                ),
+                leading: IconButton(
+                  onPressed: _handleMenuButtonPressed,
+                  icon: ValueListenableBuilder<AdvancedDrawerValue>(
+                    valueListenable: _advancedDrawerController,
+                    builder: (_, value, __) {
+                      return AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 250),
+                        child: Icon(
+                          value.visible ? Icons.clear : Icons.menu,
+                          key: ValueKey<bool>(value.visible),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              body: Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 9, right: 9),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(96, 107, 105, 105),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: TabBar(
+                          //indicatorSize: TabBarIndicatorSize.tab,
+                          indicator: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(25)),
+                          //indicatorSize: TabBarIndicatorSize.label,
+                          indicatorColor: Colors.black,
+                          indicatorWeight: 3,
+                          controller: tabController,
+                          tabs: const [
+                            Tab(
+                              child: Text(
+                                'Dogs',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 13),
+                              ),
+                            ),
+                            Tab(
+                              child: Text(
+                                'Cats',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 13),
+                              ),
+                            ),
+                            Tab(
+                              child: Text(
+                                'Parrots',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 13),
+                              ),
+                            ),
+                            Tab(
+                              child: Text(
+                                'Hamster',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 13),
+                              ),
+                            )
+                          ]),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                          physics: const BouncingScrollPhysics(),
+                          controller: tabController,
+                          children: const [
+                            DogsDetails(),
+                            CatDetails(),
+                            ParrotsDetails(),
+                            HamsterDetails(),
+                          ]),
+                    ),
+                  ],
+                ),
+              )),
+        ),
+      ),
+    );
+  }
+
+  void _handleMenuButtonPressed() {
+    // NOTICE: Manage Advanced Drawer state through the Controller.
+    _advancedDrawerController.value = AdvancedDrawerValue.visible();
+    _advancedDrawerController.showDrawer();
   }
 }

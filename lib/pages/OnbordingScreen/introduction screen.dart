@@ -141,10 +141,17 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
-                child: const Text('Skip'),
+                child: const Text(
+                  'Skip',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
                 onPressed: () => Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (ctx) => const SignIn()),
+                    MaterialPageRoute(
+                        builder: (ctx) => const SignIn(
+                              restorationId: 'main',
+                            )),
                     (route) => false),
                 // Navigator.pushAndRemoveUntil(context, Materpa, (route) => false)
               ),
@@ -163,9 +170,14 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                 ),
               ),
               TextButton(
-                child: const Text('Next'),
+                child: const Text(
+                  'Next',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
                 onPressed: () => controller.nextPage(
-                  duration: const Duration(milliseconds: 400),
+                  duration: const Duration(milliseconds: 300),
+
                   curve: Curves.easeInOut,
 
                   //Navigator.pushAndRemoveUntil(context, newRoute, (route) => false)

@@ -1,27 +1,29 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intoduction_screens/pages/Auth_Page/sign_up.dart';
-import 'package:intoduction_screens/pages/home_screen.dart';
-// import 'package:gridview/pages/Auth_Screen/sign_up_page.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:gridview/homescreen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../../Components/BottomNavigation/bottomnavigation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  const SignIn({super.key, required this.restorationId});
 
+  final String? restorationId;
   @override
   State<SignIn> createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
   bool validation = false;
-  String? errorMessage;
+  bool _obscureText = true;
   bool loading = false;
+  String? errorMessage;
+  FirebaseAuth auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _emailkey = GlobalKey<FormState>();
   final GlobalKey<FormState> _passwordkey = GlobalKey<FormState>();
   final TextEditingController emaiController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   // FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -100,12 +102,25 @@ class _SignInState extends State<SignIn> {
                     Form(
                       key: _passwordkey,
                       child: TextFormField(
-                        obscureText: true,
+                        obscureText: _obscureText,
                         controller: passwordController,
                         onSaved: (value) {
                           passwordController.text;
                         },
                         decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility_sharp
+                                  : Icons.visibility_off_sharp,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                          ),
                           prefixIcon: const Icon(
                             Icons.password,
                             size: 25,
@@ -142,18 +157,18 @@ class _SignInState extends State<SignIn> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (ctx) => const HomeScreen()));
-                        // loading = loading;
-                        // if (_emailkey.currentState!.validate()) {
-                        // } else if (_passwordkey.currentState!.validate()) {}
-                        // setState(() {
-                        //   loading = true;
-                        // });
-                        // signIn(emaiController.text.toString(),
-                        //     passwordController.text.toString());
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (ctx) => const BottomNavigator()));
+                        loading = loading;
+                        if (_emailkey.currentState!.validate()) {
+                        } else if (_passwordkey.currentState!.validate()) {}
+                        setState(() {
+                          loading = true;
+                        });
+                        signIn(emaiController.text.toString(),
+                            passwordController.text.toString());
                         loading = false;
                       },
                       child: Container(
@@ -206,50 +221,51 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  // void signIn(String email, String password) async {
-  //   if (_emailkey.currentState!.validate()) {
-  //     setState(() {
-  //       validation = true;
-  //     });
-  //     try {
-  //       await auth
-  //           .signInWithEmailAndPassword(email: email, password: password)
-  //           .then((uid) => {
-  //                 Fluttertoast.showToast(msg: "Login Successful"),
-  //                 Navigator.pushAndRemoveUntil(
-  //                     (context),
-  //                     MaterialPageRoute(builder: (context) => const HomePage()),
-  //                     (route) => false),
-  //               });
-  //     } on FirebaseAuthException catch (error) {
-  //       setState(() {
-  //         validation = false;
-  //       });
-  //       switch (error.code) {
-  //         case "invalid-email":
-  //           errorMessage = "Your email address appears to be malformed.";
+  void signIn(String email, String password) async {
+    if (_emailkey.currentState!.validate()) {
+      setState(() {
+        validation = true;
+      });
+      try {
+        await auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
+                  Fluttertoast.showToast(msg: "Login Successful"),
+                  Navigator.pushAndRemoveUntil(
+                      (context),
+                      MaterialPageRoute(
+                          builder: (context) => const BottomNavigator()),
+                      (route) => false),
+                });
+      } on FirebaseAuthException catch (error) {
+        setState(() {
+          validation = false;
+        });
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
 
-  //           break;
-  //         case "wrong-password":
-  //           errorMessage = "Your password is wrong.";
-  //           break;
-  //         case "user-not-found":
-  //           errorMessage = "User with this email doesn't exist.";
-  //           break;
-  //         case "user-disabled":
-  //           errorMessage = "User with this email has been disabled.";
-  //           break;
-  //         case "too-many-requests":
-  //           errorMessage = "Too many requests";
-  //           break;
-  //         case "operation-not-allowed":
-  //           errorMessage = "Signing in with Email and Password is not enabled.";
-  //           break;
-  //         default:
-  //           errorMessage = "An undefined Error happened.";
-  //       }
-  //       Fluttertoast.showToast(msg: errorMessage!);
-  //     }
-  //   }
-  // }
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+      }
+    }
+  }
 }
