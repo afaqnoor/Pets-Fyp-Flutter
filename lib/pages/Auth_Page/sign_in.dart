@@ -157,10 +157,6 @@ class _SignInState extends State<SignIn> {
                     ),
                     InkWell(
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (ctx) => const BottomNavigator()));
                         loading = loading;
                         if (_emailkey.currentState!.validate()) {
                         } else if (_passwordkey.currentState!.validate()) {}

@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class AlaskanDayCare extends StatefulWidget {
-  const AlaskanDayCare({super.key, required this.image, required this.daycare});
+class CatsHealths extends StatefulWidget {
+  const CatsHealths({super.key, required this.health, required this.image});
 
+  final String? health;
   final String? image;
-  final String? daycare;
   @override
-  State<AlaskanDayCare> createState() => _AlaskanDayCareState();
+  State<CatsHealths> createState() => _CatsHealthsState();
 }
 
-class _AlaskanDayCareState extends State<AlaskanDayCare> {
+class _CatsHealthsState extends State<CatsHealths> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _AlaskanDayCareState extends State<AlaskanDayCare> {
               ),
             ),
             const SizedBox(height: 20),
-            Text(widget.daycare!)
+            Text(widget.health!)
           ],
         ),
       ),

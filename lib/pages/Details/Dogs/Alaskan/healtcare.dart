@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class AlaskanHealth extends StatefulWidget {
-  const AlaskanHealth({super.key});
+  const AlaskanHealth({super.key, required this.health, required this.image});
 
+  final String? health;
+  final String? image;
   @override
   State<AlaskanHealth> createState() => _AlaskanHealthState();
 }
@@ -22,16 +25,21 @@ class _AlaskanHealthState extends State<AlaskanHealth> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(
-                    'images/dogs/Alaskan Malamute.jpeg',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  )),
+                borderRadius: BorderRadius.circular(15),
+                child: CachedNetworkImage(
+                  imageUrl: widget.image!,
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 120,
+                  memCacheHeight: 100,
+                  memCacheWidth: 100,
+                  errorWidget: (context, _, c) => const Icon(Icons.error),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
-            const Text(
-                'To care for a German Shepherd, you must feed him a highly nutritious diet, exercise him daily for 1.5 to 2 hours, and socialize him so that he feels safe around humans and other dogs. Ongoing training, twice-weekly grooming, and vet check-ups are all part of caring for a GSD.')
+            Text(widget.health!)
           ],
         ),
       ),

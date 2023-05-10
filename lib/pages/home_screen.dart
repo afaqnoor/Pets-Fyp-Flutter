@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, unused_local_variable, avoid_print
+// ignore_for_file: unused_field, unused_local_variable, avoid_print, prefer_adjacent_string_concatenation
 
 import 'dart:io';
 
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           getPickedImage();
                           firebase_storage.Reference ref = firebase_storage
                               .FirebaseStorage.instance
-                              .ref("Profile");
+                              .ref("Profile" + "profileimage");
                           firebase_storage.UploadTask uploadTask =
                               ref.putFile(_image!.absolute);
                           await Future.value(uploadTask);
@@ -144,7 +144,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         padding: const EdgeInsets.only(bottom: 35.0),
                         child: Text(
                           username.toString(),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 22),
                         ),
                       )
                     ],

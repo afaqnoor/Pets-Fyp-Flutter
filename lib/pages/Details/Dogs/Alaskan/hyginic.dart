@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class AlaskanHyginicCare extends StatefulWidget {
-  const AlaskanHyginicCare({super.key});
+  const AlaskanHyginicCare(
+      {super.key, required this.image, required this.hyginic});
 
+  final String? image;
+  final String? hyginic;
   @override
   State<AlaskanHyginicCare> createState() => _AlaskanHyginicCareState();
 }
@@ -21,20 +25,21 @@ class _AlaskanHyginicCareState extends State<AlaskanHyginicCare> {
               borderRadius: BorderRadius.circular(15),
             ),
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  'images/dogs/Alaskan Malamute.jpeg',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                )),
+              borderRadius: BorderRadius.circular(15),
+              child: CachedNetworkImage(
+                imageUrl: widget.image!,
+                filterQuality: FilterQuality.high,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 120,
+                memCacheHeight: 100,
+                memCacheWidth: 100,
+                errorWidget: (context, _, c) => const Icon(Icons.error),
+              ),
+            ),
           ),
           const SizedBox(height: 20),
-          const Text('Bath. 4 weeks.\n'
-              'Hair Brushing. 7 days.\n'
-              'Ears Cleaning. 2 weeks.\n'
-              'Nails Clipping. 4 weeks.\n'
-              'Teeth Brushing. 4 weeks.\n'
-              'Professional Grooming. 3 months.'),
+          Text(widget.hyginic!),
         ]),
       ),
     );

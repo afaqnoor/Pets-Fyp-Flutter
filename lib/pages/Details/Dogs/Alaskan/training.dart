@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class AlaskanTraining extends StatefulWidget {
-  const AlaskanTraining({super.key});
+  const AlaskanTraining(
+      {super.key, required this.image, required this.training});
 
+  final String? image;
+  final String? training;
   @override
   State<AlaskanTraining> createState() => _AlaskanTrainingState();
 }
@@ -21,16 +25,21 @@ class _AlaskanTrainingState extends State<AlaskanTraining> {
               borderRadius: BorderRadius.circular(15),
             ),
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  'images/dogs/Alaskan Malamute.jpeg',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                )),
+              borderRadius: BorderRadius.circular(15),
+              child: CachedNetworkImage(
+                imageUrl: widget.image!,
+                filterQuality: FilterQuality.high,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 120,
+                memCacheHeight: 100,
+                memCacheWidth: 100,
+                errorWidget: (context, _, c) => const Icon(Icons.error),
+              ),
+            ),
           ),
           const SizedBox(height: 20),
-          const Text(
-              "The most effective and easy-to-understand system for German Shepherds to learn is called positive reward AlaskanTraining. Using positive rewards allows you to mark the specific behaviors your German Shepherd performs right at nearly the exact moment they do them."),
+          Text(widget.training!),
         ]),
       ),
     );

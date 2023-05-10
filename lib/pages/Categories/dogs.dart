@@ -38,10 +38,16 @@ class _DogsDetailsState extends State<DogsDetails> {
                           context,
                           MaterialPageRoute(
                               builder: (ctx) => AlaskanDetails(
-                                    image: CachedNetworkImage(
-                                        imageUrl: snapshot.data!.docs[index]
-                                            ['image_url']),
-                                    name: snapshot.data!.docs[index]['name'],
+                                    image: snapshot.data!.docs[index]
+                                        ['image_url'],
+                                    health: snapshot.data!.docs[index]
+                                        ['healtcare'],
+                                    daycare: snapshot.data!.docs[index]
+                                        ['daycare'],
+                                    hyginiccare: snapshot.data!.docs[index]
+                                        ['hyginiccare'],
+                                    training: snapshot.data!.docs[index]
+                                        ['training'],
                                   )));
                     },
                     child: Padding(

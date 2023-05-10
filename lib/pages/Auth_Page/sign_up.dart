@@ -284,6 +284,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     InkWell(
                       onTap: () {
+                        loading = loading;
                         if (_emailkey.currentState!.validate()) {
                         } else if (_phonekey.currentState!.validate()) {
                         } else if (_passwordkey.currentState!.validate()) {

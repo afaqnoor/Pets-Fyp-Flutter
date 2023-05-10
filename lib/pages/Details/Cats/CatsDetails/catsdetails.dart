@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/daycare.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/healtcare.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/hyginic.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/training.dart';
+import 'package:intoduction_screens/pages/Details/Cats/training.dart';
+import '../daycare.dart';
+import '../healthcare.dart';
+import '../hyginiecare.dart';
 
-class AlaskanDetails extends StatefulWidget {
-  const AlaskanDetails(
+class CatsDetails extends StatefulWidget {
+  const CatsDetails(
       {super.key,
       required this.health,
       required this.image,
@@ -22,10 +22,10 @@ class AlaskanDetails extends StatefulWidget {
   final String? image;
 
   @override
-  State<AlaskanDetails> createState() => _AlaskanDetailsState();
+  State<CatsDetails> createState() => _CatsDetailsState();
 }
 
-class _AlaskanDetailsState extends State<AlaskanDetails>
+class _CatsDetailsState extends State<CatsDetails>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
@@ -185,19 +185,19 @@ class _AlaskanDetailsState extends State<AlaskanDetails>
                 physics: const BouncingScrollPhysics(),
                 controller: tabController,
                 children: [
-                  AlaskanHealth(
+                  CatsHealths(
                     image: widget.image,
                     health: widget.health,
                   ),
-                  AlaskanDayCare(
+                  CatsDayCare(
                     image: widget.image,
                     daycare: widget.daycare,
                   ),
-                  AlaskanTraining(
+                  CatsTraning(
                     image: widget.image,
                     training: widget.training,
                   ),
-                  AlaskanHyginicCare(
+                  CatsHyginie(
                     image: widget.image,
                     hyginic: widget.hyginiccare,
                   ),

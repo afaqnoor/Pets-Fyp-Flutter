@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/daycare.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/healtcare.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/hyginic.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/training.dart';
+import '../daycare.dart';
+import '../healthcare.dart';
+import '../hyginie.dart';
+import '../trianing.dart';
 
-class AlaskanDetails extends StatefulWidget {
-  const AlaskanDetails(
+class WishkerHasmter extends StatefulWidget {
+  const WishkerHasmter(
       {super.key,
       required this.health,
       required this.image,
@@ -22,10 +22,10 @@ class AlaskanDetails extends StatefulWidget {
   final String? image;
 
   @override
-  State<AlaskanDetails> createState() => _AlaskanDetailsState();
+  State<WishkerHasmter> createState() => _WishkerHasmterState();
 }
 
-class _AlaskanDetailsState extends State<AlaskanDetails>
+class _WishkerHasmterState extends State<WishkerHasmter>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
@@ -185,19 +185,19 @@ class _AlaskanDetailsState extends State<AlaskanDetails>
                 physics: const BouncingScrollPhysics(),
                 controller: tabController,
                 children: [
-                  AlaskanHealth(
+                  HamsterHealths(
                     image: widget.image,
                     health: widget.health,
                   ),
-                  AlaskanDayCare(
+                  HamsterDayCare(
                     image: widget.image,
                     daycare: widget.daycare,
                   ),
-                  AlaskanTraining(
+                  HamsterTraning(
                     image: widget.image,
-                    training: widget.training,
+                    traning: widget.training,
                   ),
-                  AlaskanHyginicCare(
+                  HamsterHyginic(
                     image: widget.image,
                     hyginic: widget.hyginiccare,
                   ),

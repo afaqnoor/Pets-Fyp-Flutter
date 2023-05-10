@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class AlaskanDayCare extends StatefulWidget {
-  const AlaskanDayCare({super.key, required this.image, required this.daycare});
+class ParrotsDayCare extends StatefulWidget {
+  const ParrotsDayCare({super.key, required this.daycare, required this.image});
 
-  final String? image;
   final String? daycare;
+  final String? image;
   @override
-  State<AlaskanDayCare> createState() => _AlaskanDayCareState();
+  State<ParrotsDayCare> createState() => _ParrotsDayCareState();
 }
 
-class _AlaskanDayCareState extends State<AlaskanDayCare> {
+class _ParrotsDayCareState extends State<ParrotsDayCare> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

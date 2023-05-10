@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/daycare.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/healtcare.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/hyginic.dart';
-import 'package:intoduction_screens/pages/Details/Dogs/Alaskan/training.dart';
+import 'package:intoduction_screens/pages/Details/Parrots/daycare.dart';
+import 'package:intoduction_screens/pages/Details/Parrots/healthcare.dart';
+import 'package:intoduction_screens/pages/Details/Parrots/hyginie.dart';
+import 'package:intoduction_screens/pages/Details/Parrots/training.dart';
 
-class AlaskanDetails extends StatefulWidget {
-  const AlaskanDetails(
+class CocktailsParrots extends StatefulWidget {
+  const CocktailsParrots(
       {super.key,
       required this.health,
       required this.image,
@@ -22,10 +22,10 @@ class AlaskanDetails extends StatefulWidget {
   final String? image;
 
   @override
-  State<AlaskanDetails> createState() => _AlaskanDetailsState();
+  State<CocktailsParrots> createState() => _CocktailsParrotsState();
 }
 
-class _AlaskanDetailsState extends State<AlaskanDetails>
+class _CocktailsParrotsState extends State<CocktailsParrots>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
@@ -185,19 +185,19 @@ class _AlaskanDetailsState extends State<AlaskanDetails>
                 physics: const BouncingScrollPhysics(),
                 controller: tabController,
                 children: [
-                  AlaskanHealth(
+                  ParrotsHealths(
                     image: widget.image,
                     health: widget.health,
                   ),
-                  AlaskanDayCare(
+                  ParrotsDayCare(
                     image: widget.image,
                     daycare: widget.daycare,
                   ),
-                  AlaskanTraining(
+                  ParrotsTraining(
                     image: widget.image,
-                    training: widget.training,
+                    traning: widget.training,
                   ),
-                  AlaskanHyginicCare(
+                  ParrotsHyginic(
                     image: widget.image,
                     hyginic: widget.hyginiccare,
                   ),

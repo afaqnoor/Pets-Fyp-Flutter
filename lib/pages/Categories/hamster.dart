@@ -3,8 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../Details/Dogs/Alaskan/AlskanDetails/alaskandetails.dart';
+import 'package:intoduction_screens/pages/Details/Hamster/HamsterDetails/wishkerdetails.dart';
 
 class HamsterDetails extends StatefulWidget {
   const HamsterDetails({super.key});
@@ -39,11 +38,17 @@ class _HamsterDetailsState extends State<HamsterDetails> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (ctx) => AlaskanDetails(
-                                    image: CachedNetworkImage(
-                                        imageUrl: snapshot.data!.docs[index]
-                                            ['image_url']),
-                                    name: snapshot.data!.docs[index]['name'],
+                              builder: (ctx) => WishkerHasmter(
+                                    image: snapshot.data!.docs[index]
+                                        ['image_url'],
+                                    health: snapshot.data!.docs[index]
+                                        ['healtcare'],
+                                    daycare: snapshot.data!.docs[index]
+                                        ['daycare'],
+                                    hyginiccare: snapshot.data!.docs[index]
+                                        ['hyginiccare'],
+                                    training: snapshot.data!.docs[index]
+                                        ['training'],
                                   )));
                     },
                     child: Padding(
