@@ -4,7 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../pages/BottomNavigateScreen/calender.dart';
 import '../../pages/BottomNavigateScreen/chatlist.dart';
 import '../../pages/BottomNavigateScreen/profile_screen.dart';
-import '../../pages/home_screen.dart';
+import '../../pages/BottomNavigateScreen/home_screen.dart';
 
 class BottomNavigator extends StatefulWidget {
   const BottomNavigator({super.key});
