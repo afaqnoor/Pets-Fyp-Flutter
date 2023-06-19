@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intoduction_screens/pages/Auth_Page/sign_up.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ndialog/ndialog.dart';
 import '../../Components/BottomNavigation/bottomnavigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -47,7 +48,7 @@ class _SignInState extends State<SignIn> {
                     const CircleAvatar(
                       radius: 40,
                       backgroundColor: Colors.white,
-                      backgroundImage: AssetImage('images/pets.png'),
+                      backgroundImage: AssetImage('images/logo.png'),
                     ),
                     const SizedBox(
                       height: 20,
@@ -222,11 +223,16 @@ class _SignInState extends State<SignIn> {
       setState(() {
         validation = true;
       });
+      ProgressDialog progressDialog = ProgressDialog(context,
+          title: const Text('Sign In'),
+          message: const Text('Please Wait ....'));
+      progressDialog.show();
       try {
         await auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
+                  progressDialog.dismiss(),
                   Navigator.pushAndRemoveUntil(
                       (context),
                       MaterialPageRoute(
@@ -237,6 +243,7 @@ class _SignInState extends State<SignIn> {
         setState(() {
           validation = false;
         });
+        progressDialog.dismiss();
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";
@@ -261,6 +268,9 @@ class _SignInState extends State<SignIn> {
             errorMessage = "An undefined Error happened.";
         }
         Fluttertoast.showToast(msg: errorMessage!);
+      } catch (e) {
+        progressDialog.dismiss();
+        errorMessage = "Something want Wrong";
       }
     }
   }

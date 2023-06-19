@@ -7,6 +7,7 @@ import 'package:intoduction_screens/pages/Auth_Page/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ndialog/ndialog.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -56,7 +57,7 @@ class _SignUpState extends State<SignUp> {
                     const CircleAvatar(
                       radius: 40,
                       backgroundColor: Colors.white,
-                      backgroundImage: AssetImage('images/pets.png'),
+                      backgroundImage: AssetImage('images/logo.png'),
                     ),
                     const SizedBox(
                       height: 20,
@@ -251,6 +252,19 @@ class _SignUpState extends State<SignUp> {
                           confirmpasswordController.text;
                         },
                         decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText1
+                                  ? Icons.visibility_sharp
+                                  : Icons.visibility_off_sharp,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText1 = !_obscureText1;
+                              });
+                            },
+                          ),
                           prefixIcon: const Icon(
                             Icons.password,
                             size: 25,
@@ -351,14 +365,19 @@ class _SignUpState extends State<SignUp> {
   }
 
   void signUp(String email, String password) async {
+    ProgressDialog progressDialog = ProgressDialog(context,
+        title: const Text('Sign Up'), message: const Text('Please Wait ....'));
+    progressDialog.show();
     try {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) => {postDetailsToFirestore()})
           .catchError((e) {
+        progressDialog.dismiss();
         Fluttertoast.showToast(msg: e!.message);
       });
     } on FirebaseAuthException catch (error) {
+      progressDialog.dismiss();
       switch (error.code) {
         case "invalid-email":
           errorMessage = "Your email address appears to be malformed.";
@@ -382,6 +401,9 @@ class _SignUpState extends State<SignUp> {
           errorMessage = "An undefined Error happened.";
       }
       Fluttertoast.showToast(msg: errorMessage!);
+    } catch (e) {
+      progressDialog.dismiss();
+      errorMessage = 'Something want wrong';
     }
   }
 

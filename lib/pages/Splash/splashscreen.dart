@@ -16,7 +16,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    super.initState();
     Future.delayed(const Duration(seconds: 4), () {
       if (FirebaseAuth.instance.currentUser == null) {
         Navigator.pushAndRemoveUntil(
@@ -38,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
           child: Padding(
         padding: const EdgeInsets.all(98.0),
-        child: Image.asset('images/Logo.png'),
+        child: Image.asset('images/logo.png'),
       )),
     );
   }

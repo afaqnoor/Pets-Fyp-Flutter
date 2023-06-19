@@ -253,6 +253,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           ),
                           child: Image.asset(
                             'images/Carousal/dog.jpg',
+                            width: double.infinity,
+                            height: double.infinity,
+                            colorBlendMode: BlendMode.darken,
+                            color: const Color.fromARGB(95, 108, 108, 108),
                           ),
                         ),
                         Container(
@@ -261,7 +265,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Image.asset('images/Carousal/cat.jpg'),
+                          child: Image.asset(
+                            'images/Carousal/cat.jpg',
+                            width: double.infinity,
+                            height: double.infinity,
+                            colorBlendMode: BlendMode.darken,
+                            color: const Color.fromARGB(95, 108, 108, 108),
+                          ),
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height / 14,
@@ -269,7 +279,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Image.asset('images/Carousal/horse.jpeg'),
+                          child: Image.asset(
+                            'images/Carousal/horse.jpeg',
+                            width: double.infinity,
+                            height: double.infinity,
+                            colorBlendMode: BlendMode.darken,
+                            color: const Color.fromARGB(95, 108, 108, 108),
+                          ),
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height / 14,
@@ -277,7 +293,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Image.asset('images/Carousal/fish.jpg'),
+                          child: Image.asset(
+                            'images/Carousal/fish.jpg',
+                            width: double.infinity,
+                            height: double.infinity,
+                            colorBlendMode: BlendMode.darken,
+                            color: const Color.fromARGB(95, 108, 108, 108),
+                          ),
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height / 14,
@@ -285,7 +307,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Image.asset('images/Carousal/rabbit.jpg'),
+                          child: Image.asset(
+                            'images/Carousal/rabbit.jpg',
+                            width: double.infinity,
+                            height: double.infinity,
+                            colorBlendMode: BlendMode.darken,
+                            color: const Color.fromARGB(95, 108, 108, 108),
+                          ),
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height / 14,
@@ -293,7 +321,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Image.asset('images/Carousal/parrot.jpg'),
+                          child: Image.asset(
+                            'images/Carousal/parrot.jpg',
+                            width: double.infinity,
+                            height: double.infinity,
+                            colorBlendMode: BlendMode.darken,
+                            color: const Color.fromARGB(95, 108, 108, 108),
+                          ),
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height / 14,
@@ -301,7 +335,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Image.asset('images/Carousal/hamst.jpg'),
+                          child: Image.asset(
+                            'images/Carousal/hamst.jpg',
+                            width: double.infinity,
+                            height: double.infinity,
+                            colorBlendMode: BlendMode.darken,
+                            color: const Color.fromARGB(95, 108, 108, 108),
+                          ),
                         ),
                       ],
                       options: CarouselOptions(

@@ -32,66 +32,73 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
               Container(
                 color: Colors.white,
                 child: Column(
-                  children: const [
-                    Padding(
+                  children: [
+                    const Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                       child: Image(
                           height: 250, image: AssetImage('images/Jack.png')),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: 20,
-                        horizontal: 20,
-                      ),
-                      title: Center(
-                          child: Text(
-                        'Find Pet Care Around Your Loacation',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                    Column(
+                      children: const [
+                        Text(
+                          "Find petcare areound \n      your location",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 25),
                         ),
-                      )),
-                      subtitle: Text(
-                          'Four Paws Pets clinic Lore m Ipsum is  the bakery of all kind of sweets and cakes simply dummy text of the printing and typesetting industry'),
-                    ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Just turn your location and you will find \n       the nearest pet care you wish.',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),
               Center(
                 child: Container(
+                  width: double.infinity,
                   color: Colors.white,
                   child: Column(
-                    children: const [
-                      Padding(
+                    children: [
+                      const Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                         child: Image(
                             height: 250, image: AssetImage('images/Billu.png')),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 20,
-                        ),
-                        title: Center(
-                          child: Text(
-                            'Find Pet Care Around Your Location',
+                      Column(
+                        children: const [
+                          Text(
+                            "Let us give the best\n       treatment",
                             style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                                fontSize: 25),
                           ),
-                        ),
-                        subtitle: Text(
-                          'Lore m Ipsum is  the bakery of all kind of sweets and cakes simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-                          style: TextStyle(color: Colors.black),
-                        ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Get the best treatment for your \n            animal with us.',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          )
+                        ],
                       )
                     ],
                   ),
@@ -100,33 +107,35 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
               Container(
                 color: Colors.white,
                 child: Column(
-                  children: const [
-                    Padding(
+                  children: [
+                    const Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                       child: Image(
                           height: 250, image: AssetImage('images/Bullet.png')),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
-                    Center(
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 20,
-                        ),
-                        title: Center(
-                            child: Text(
-                          'Find Pet Care Around Your Location ',
+                    Column(
+                      children: const [
+                        Text(
+                          "Give the good enivroment\n              with pets",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.black),
-                        )),
-                        subtitle: Text(
-                          'Lore m Ipsum is  the bakery of all kind of sweets and cakes simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-                          style: TextStyle(color: Colors.black),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 25),
                         ),
-                      ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Get the best training for your \n            animal with us.',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        )
+                      ],
                     )
                   ],
                 ),
